@@ -19,7 +19,7 @@ CREATE TABLE points (
 );
 
 select setval('s_path',2,false);
-insert into path (1,'Москва-Владивосток',9343);
+insert into path (id,name,long) values (1,'Москва-Владивосток',9343);
 insert into points (name,km) values ('Москва /Московская область/',0);
 insert into points (name,km) values ('Москва (МКАД 94 км) /Московская область/',17);
 insert into points (name,km) values ('Пироговский /Московская область/',31);
