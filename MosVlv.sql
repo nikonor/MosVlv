@@ -1,5 +1,7 @@
 create database mosvlv;
 
+drop SEQUENCE s_path;
+drop TABLE path;
 CREATE SEQUENCE s_path;
 CREATE TABLE path (
     id integer DEFAULT nextval('s_path'::regclass) NOT NULL,
@@ -8,6 +10,8 @@ CREATE TABLE path (
 );
 
 
+drop SEQUENCE s_points;
+drop TABLE points;
 CREATE SEQUENCE s_points;
 CREATE TABLE points (
     id integer DEFAULT nextval('s_points'::regclass) NOT NULL,
@@ -177,3 +181,13 @@ insert into points (name,km) values ('Уссурийск /Приморский �
 insert into points (name,km) values ('Раздольное /Приморский край/',9279);
 insert into points (name,km) values ('Угловое /Приморский край/',9315);
 insert into points (name,km) values ('Владивосток /Приморский край/',9343);    
+
+
+drop SEQUENCE s_users;
+drop TABLE users;
+CREATE SEQUENCE s_users;
+CREATE TABLE users (
+    id integer DEFAULT nextval('s_users'::regclass) NOT NULL,
+    email character varying(255),
+    hash text
+);

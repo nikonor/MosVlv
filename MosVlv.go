@@ -7,6 +7,7 @@ import (
 	"github.com/gorilla/mux"
 	u "github.com/nikonor/umb_lib"
     uDB "github.com/nikonor/umb_db"
+    // user "github.com/nikonor/umb_user"
 	"log"
 	"net/http"
 	// "os"
@@ -136,6 +137,8 @@ func main() {
 	// router.HandleFunc("/api/json/{key}", handler_json).Methods("GET")
     router.HandleFunc("/api/path", pathes).Methods("GET") ///{path_id:[0-9]*}
     router.HandleFunc("/api/path/{path_id:[0-9]+}", path).Methods("GET") 
+    router.HandleFunc("/api/user{user_id:[/0-9]*}", user_func) ///{path_id:[0-9]*}
+    // router.HandleFunc("/api/user/{path_id:[0-9]+}", path).Methods("GET") 
 	router.PathPrefix("/").Handler(http.FileServer(http.Dir(conf["STATIC_DIR"])))
 
 	http.Handle("/", router)
