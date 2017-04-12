@@ -5,6 +5,7 @@ import (
     "net/http"
     "github.com/gorilla/mux"
     "strconv"
+    "log"
 )
 
 func user_func (w http.ResponseWriter, r *http.Request) {
@@ -24,6 +25,11 @@ func user_func (w http.ResponseWriter, r *http.Request) {
     data := []Data{{"Nikonor", 44}, {"Nikonor.JR", 6}}
 
 
+    log.Printf("user_id=%d",user_id)
+    if user_id == 22 {
+        out_error(w, 500, "проверка")
+        return
+    } 
     data = append(data,Data{vars["user_id"],user_id})
     js, _ := json.Marshal(data)
     out_json(w, js)

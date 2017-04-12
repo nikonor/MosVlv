@@ -3,7 +3,7 @@ package main
 import (
 	"bytes"
 	"encoding/json"
-	// "fmt"
+	"fmt"
 	"github.com/gorilla/mux"
 	u "github.com/nikonor/umb_lib"
     uDB "github.com/nikonor/umb_db"
@@ -66,6 +66,11 @@ func out_json(w http.ResponseWriter, s []byte) {
 func out_html(w http.ResponseWriter, s []byte) {
 	w.Header().Set("Content-Type", "text/html")
 	w.Write(s)
+}
+
+func out_error(w http.ResponseWriter, status int, s string) {
+    w.WriteHeader(http.StatusInternalServerError)
+    w.Write([]byte(fmt.Sprintf("%d - %s",status, string(s))))
 }
 
 func path(w http.ResponseWriter, r *http.Request) {
