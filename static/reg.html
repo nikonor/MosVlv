@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script type="text/javascript" src="http://yastatic.net/jquery/3.1.1/jquery.min.js"></script>
+    <title>регистрация</title>
+<script type="text/javascript">
+function reg () {
+    var email = $('#email').val();
+    var p1 = $('#password').val();
+    var p2 = $('#password-rep').val();        
+    console.group('call reg');
+    console.log(email, p1, p2);
+
+    if (p1.length == 0 || p1 != p2) {
+        alert('Не задан пароль или пароли не совпадают');
+    } else {
+        var data = JSON.stringify({email: email, password: p1});
+        console.log(data);
+        $.ajax({
+            url: '/api/user',
+            data: "email="+email+"&password="+p1,
+            type:       'PUT'
+        })
+        .statusCode({
+            200:  function(data){
+                mes_m('Успешно сохранено');
+                console.group('Code 200');
+                console.log(data);
+                console.groupEnd();
+            },
+            403:  function(){
+                mes_e('Доступ запрещён');
+                console.group('Code 403');
+                console.log(data);
+                console.groupEnd();
+            },
+            409: function(data){
+                mes_e('Этот email уже занят.', data.responseJSON.message);
+                console.group('Code 409');
+                console.log(data);
+                console.groupEnd();
+            },
+            500: function(data){
+                mes_e('Error.', data.responseJSON.message);
+                console.group('Code 500');
+                console.log(data);
+                console.groupEnd();
+            },
+        });
+    }
+
+    console.groupEnd();
+
+    return false;
+}    
+
+function mes_e(s) {
+    alert ("Error: "+ s)
+}
+
+function mes_m(s) {
+    alert ("Success: "+ s)
+}
+
+</script>    
+</head>
+<body>
+    <h1>регистрация</h1>
+    <form>
+        E-Mail: <input type="email" id="email" placeholder="name@domain.ru"><br>
+        Пароль: <input type="password" id="password"><br>
+        Подтверждение пароля: <input type="password" id="password-rep"><br>
+        <button onclick="return reg();">Зарегистрироваться</button>
+    </form>
+</body>
+</html>
